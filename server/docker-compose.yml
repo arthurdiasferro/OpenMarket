@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: openmarket-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: openmarket
+      POSTGRES_PASSWORD: openmarket
+      POSTGRES_DB: openmarket
+    ports:
+      - "5432:5432"
+    volumes:
+      - openmarket-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U openmarket -d openmarket"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  openmarket-pgdata:
