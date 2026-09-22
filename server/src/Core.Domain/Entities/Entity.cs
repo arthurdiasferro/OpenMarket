@@ -1,8 +1,7 @@
-namespace Core.Domain.Entities
+namespace Core.Domain.Entities;
+
+public abstract class Entity
 {
-    public abstract class Entity
-    {
-        public Guid Id { get; protected set; }
-        public DateTime CreatedAt { get; protected set; }
-    }
+    public Guid Id { get; protected set; }
+    public DateTime CreatedAt { get; protected set; }
 }

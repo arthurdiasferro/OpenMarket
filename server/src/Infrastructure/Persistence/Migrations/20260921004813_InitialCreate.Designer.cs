@@ -9,95 +9,94 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Infrastructure.Persistence.Migrations
+namespace Infrastructure.Persistence.Migrations;
+
+[DbContext(typeof(AppDbContext))]
+[Migration("20260921004813_InitialCreate")]
+partial class InitialCreate
 {
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20260921004813_InitialCreate")]
-    partial class InitialCreate
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.12")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+        modelBuilder
+            .HasAnnotation("ProductVersion", "10.0.12")
+            .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+        NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+        modelBuilder.Entity("Domain.Entities.Category", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasMaxLength(1000)
+                    .HasColumnType("character varying(1000)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("character varying(120)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(120)
+                    .HasColumnType("character varying(120)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("categories", (string)null);
-                });
+                b.ToTable("categories", (string)null);
+            });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+        modelBuilder.Entity("Domain.Entities.Product", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
+                b.Property<Guid>("CategoryId")
+                    .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTime>("CreatedAt")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasMaxLength(2000)
+                    .HasColumnType("character varying(2000)");
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
+                b.Property<bool>("IsActive")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("boolean")
+                    .HasDefaultValue(true);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("character varying(200)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric(18,2)");
+                b.Property<decimal>("Price")
+                    .HasColumnType("numeric(18,2)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                b.Property<DateTime>("UpdatedAt")
+                    .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                b.HasIndex("CategoryId");
 
-                    b.ToTable("products", (string)null);
-                });
+                b.ToTable("products", (string)null);
+            });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
-                {
-                    b.HasOne("Domain.Entities.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
+        modelBuilder.Entity("Domain.Entities.Product", b =>
+            {
+                b.HasOne("Domain.Entities.Category", null)
+                    .WithMany()
+                    .HasForeignKey("CategoryId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
+            });
 #pragma warning restore 612, 618
-        }
     }
 }

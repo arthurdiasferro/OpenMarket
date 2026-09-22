@@ -11,4 +11,9 @@ public class CategoryRepository(AppDbContext context) : PostgreRepository<Catego
     {
         return await DbSet.FirstOrDefaultAsync(c => c.Name == name, cancellationToken);
     }
+
+    public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await DbSet.AnyAsync(c => c.Id == id, cancellationToken);
+    }
 }

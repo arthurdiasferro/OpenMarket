@@ -1,4 +1,6 @@
 using Domain.Entities.Categories.Repository;
+using Domain.Entities.Products.Repository;
+using Domain.Entities.Stocks.Repository;
 using Infrastructure.Data;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IStockRepository, StockRepository>();
 
         return services;
     }

@@ -10,6 +10,8 @@ public static class DependencyInjection
         services.AddAutoMapper(cfg => { }, typeof(DependencyInjection).Assembly);
 
         services.AddScoped<CategoryService>();
+        services.AddScoped<ProductService>();
+        services.AddScoped<StockService>();
 
         return services;
     }
